@@ -69,11 +69,23 @@ const addTodo = (description) => {
 };
 
 /**
- * !Función para cambiar el estado de completado de un todo
+ * !Función para cambiar el estado de completado de un todo, de true a false y viceversa
  * @param {String} todoId identificador todo
  */
 const toggleTodo = (todoId) => {
-  throw new Error("Not implemented");
+  if (!todoId) throw new Error("todoId is required");
+
+  //barremos todos los elementos
+  //la manera más eficiente para esto es usar find, al encontrar el todo cambiamos el estado y lo insertamos de nuevo
+  //el problema de hacerlo como está ahorita es que si hay 1000 todo's, vamos a recorrerlos todos y no es tan eficiente
+  state.todos = state.todos.map((todo) => {
+    //en el momento que encontremos el todo que estamos buscando por el id, entonces
+    if (todo.id === todoId) {
+      //cambia el estado, si esta en false pasa a true y viceversa
+      todo.done = !todo.done;
+    }
+    return todo;
+  });
 };
 
 /**
@@ -83,7 +95,7 @@ const toggleTodo = (todoId) => {
 const deleteTodo = (todoId) => {
   //si no se recibe el id del todo, se lanza un error
   if (!todoId) throw new Error("todoId is required");
-  
+
   //actualizamos los todos del estado, hacemos un filtro, se van a regresar en el mismo array todo
   // los todos que tengan el id diferente del que recibimos.
   state.todos = state.todos.filter((todo) => todo.id !== todoId);
