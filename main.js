@@ -1,5 +1,5 @@
 import "./style.css";
-import { App } from "./src/todos/app";
+import App from "./src/todos/app";
 import initStore from "./src/store/todo-store";
 
 //iniciamos el store, manda el mensae de store iniciado

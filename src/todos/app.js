@@ -12,12 +12,12 @@ const elementsIDs = {
  *
  * @param {String} elementId id del elemento donde vamos a meter algo
  */
-export const App = (elementId) => {
+const App = (elementId) => {
   //!función que renderiza, muestra los tod
   const renderizarTodos = () => {
     //obtine los todos, con el filtro 'todos los todos'
     const todos = todoStore.getTodos(todoStore.getCurrentFilter());
-    
+
     //llama a la función que renderia los todos, le enviamos el id del lugar donde queremos renderizar
     //y tambien la referencia al array de todos
     renderTodos(elementsIDs.listaTODOS, todos);
@@ -35,3 +35,5 @@ export const App = (elementId) => {
     renderizarTodos();
   })();
 };
+
+export default App;
