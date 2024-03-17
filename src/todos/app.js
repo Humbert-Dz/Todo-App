@@ -74,7 +74,13 @@ const App = (elementId) => {
 
     const element = e.target.closest("[data-id]");
 
-    todoStore.toggleTodo(element.getAttribute("data-id"));
+    //evaluamos si el elemento al cual se hizo click tiene el id destroy
+    //quiere decir que se hizo click en el boton de eliminar
+    if (e.target.id === "destroy") {
+      todoStore.deleteTodo(element.getAttribute("data-id"));
+    } else {
+      todoStore.toggleTodo(element.getAttribute("data-id"));
+    }
 
     renderizarTodos();
   });
