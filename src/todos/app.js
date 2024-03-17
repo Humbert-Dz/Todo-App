@@ -8,6 +8,8 @@ const elementsIDs = {
   listaTODOS: ".todo-list",
   //inout donde se ingresa el todo
   NewTodoInput: "#new-todo-input",
+  //boton eliminar todosCompletados
+  btnEliminarTodos: "#clear-completed",
 };
 
 /**
@@ -44,7 +46,7 @@ const App = (elementId) => {
   //referencia a la lista donde se renderizarán los todos
   const todoList = document.querySelector(elementsIDs.listaTODOS);
 
-  //agregamos un evento al input de agregar todo
+  //*agregamos un evento al input de agregar todo
   newDescriptionInput.addEventListener("keyup", (e) => {
     //si la tecla presionada no es el enter (cada tecla tiene un keyCode, el del enter es 13)
     if (e.keyCode !== 13) return;
@@ -66,7 +68,7 @@ const App = (elementId) => {
     renderizarTodos();
   });
 
-  //al contenedor de todos, agregamos un evento click
+  //*al contenedor de todos, agregamos un evento click
   todoList.addEventListener("click", (e) => {
     // lo que hace e.target es tomar el elemento sobre el cual hicimos click, ya sea label/ button
     // lo que hace el método closest es retornar el elemento padre más cercano del elemento sobre el que se hace click
@@ -81,6 +83,15 @@ const App = (elementId) => {
     } else {
       todoStore.toggleTodo(element.getAttribute("data-id"));
     }
+
+    renderizarTodos();
+  });
+
+  //* eliminar todos completados
+  const btnEliminarTodos = document.querySelector(elementsIDs.btnEliminarTodos);
+
+  btnEliminarTodos.addEventListener("click", () => {
+    todoStore.deleteCompleted();
 
     renderizarTodos();
   });

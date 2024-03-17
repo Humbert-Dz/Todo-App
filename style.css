@@ -232,6 +232,7 @@ span {
 
 .completed {
   text-decoration: line-through;
+  color: #6c757d;
 }
 
 /* Create a custom checkbox */
@@ -302,5 +303,22 @@ span {
   background: #e62222;
   box-shadow: 3px 3px 0px rgb(183, 183, 183);
   cursor: pointer;
-  clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
+  clip-path: polygon(
+    20% 0%,
+    0% 20%,
+    30% 50%,
+    0% 80%,
+    20% 100%,
+    50% 70%,
+    80% 100%,
+    100% 80%,
+    70% 50%,
+    100% 20%,
+    80% 0%,
+    50% 30%
+  );
+}
+
+button:active {
+  transform: scale(0.95);
 }
