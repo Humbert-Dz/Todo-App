@@ -75,17 +75,13 @@ const addTodo = (description) => {
 const toggleTodo = (todoId) => {
   if (!todoId) throw new Error("todoId is required");
 
-  //barremos todos los elementos
-  //la manera más eficiente para esto es usar find, al encontrar el todo cambiamos el estado y lo insertamos de nuevo
-  //el problema de hacerlo como está ahorita es que si hay 1000 todo's, vamos a recorrerlos todos y no es tan eficiente
-  state.todos = state.todos.map((todo) => {
-    //en el momento que encontremos el todo que estamos buscando por el id, entonces
-    if (todo.id === todoId) {
-      //cambia el estado, si esta en false pasa a true y viceversa
-      todo.done = !todo.done;
-    }
-    return todo;
-  });
+  //buscamos el elemento correspondiente a ese id
+  const todo = state.todos.find((todo) => todo.id === todoId);
+  console.log(todo);
+  //cambiamos el estado de completado
+  todo.done = !todo.done;
+
+  console.log(todo);
 };
 
 /**

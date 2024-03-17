@@ -38,8 +38,11 @@ const App = (elementId) => {
     renderizarTodos();
   })();
 
-  //refererencia a input para agregar un
+  // * referencias HTML
+  //refererencia a input para agregar un todo
   const newDescriptionInput = document.querySelector(elementsIDs.NewTodoInput);
+  //referencia a la lista donde se renderizarán los todos
+  const todoList = document.querySelector(elementsIDs.listaTODOS);
 
   //agregamos un evento al input de agregar todo
   newDescriptionInput.addEventListener("keyup", (e) => {
@@ -60,6 +63,19 @@ const App = (elementId) => {
     newDescriptionInput.value = "";
 
     //renderiza los todos
+    renderizarTodos();
+  });
+
+  //al contenedor de todos, agregamos un evento click
+  todoList.addEventListener("click", (e) => {
+    // lo que hace e.target es tomar el elemento sobre el cual hicimos click, ya sea label/ button
+    // lo que hace el método closest es retornar el elemento padre más cercano del elemento sobre el que se hace click
+    // que tenga el atributo data-id
+
+    const element = e.target.closest("[data-id]");
+
+    todoStore.toggleTodo(element.getAttribute("data-id"));
+
     renderizarTodos();
   });
 };
