@@ -17,24 +17,47 @@ const Filters = {
  * *un filtro
  */
 const state = {
-  todos: [
-    new Todo("Piedra del alma"),
-    new Todo("Piedra del infinito"),
-    new Todo("Piedra del tiempo"),
-    new Todo("Piedra de marfil"),
-  ],
+  todos: [],
   //uso del filtro
   filter: Filters.All,
 };
 
 //!funcion que indica que se inicializa el store, o que simplemente se cargó con exito
 const initStore = () => {
-  console.log(state);
+  //carga el storage
+  loadStore();
+
   console.log("InitStore 🥑");
 };
 
+/**
+ * !Funcion que carga el local storage en caso de existir
+ * @returns 
+ */
 const loadStore = () => {
-  throw new Error("Not implemented");
+  //validamos que si no existe el item local storage simplemente retornamos
+  if (!localStorage.getItem("state")) return;
+
+  //hacemos una desestructuracion, obtenemos el json que se encuentra en el local storage con la llave state
+  // y la convertimos a su tipo respectivo, asignandolo con la destructuración la cual tiene valores por defecto
+  const { todos = [], filter = Filters.All } = JSON.parse(
+    localStorage.getItem("state")
+  );
+
+  //asignamos los valores correspondientes
+  state.todos = todos;
+  state.filter = filter;
+};
+
+/**
+ * !funcion que permite guardar los todos en el localStorage
+ */
+const saveLocalStore = () => {
+  //convertimos nuestros todos en json
+  const todos = JSON.stringify(state);
+
+  //guardamos en el local storage los todos con la llave state
+  localStorage.setItem("state", todos);
 };
 
 /**
@@ -66,6 +89,9 @@ const addTodo = (description) => {
 
   //se agrega el nuevo todo al estado
   state.todos.push(new Todo(description));
+
+  //guardamos el cambio en el localStorage
+  saveLocalStore();
 };
 
 /**
@@ -77,11 +103,12 @@ const toggleTodo = (todoId) => {
 
   //buscamos el elemento correspondiente a ese id
   const todo = state.todos.find((todo) => todo.id === todoId);
-  console.log(todo);
+
   //cambiamos el estado de completado
   todo.done = !todo.done;
 
-  console.log(todo);
+  //guardamos el cambio en el localStorage
+  saveLocalStore();
 };
 
 /**
@@ -95,6 +122,9 @@ const deleteTodo = (todoId) => {
   //actualizamos los todos del estado, hacemos un filtro, se van a regresar en el mismo array todo
   // los todos que tengan el id diferente del que recibimos.
   state.todos = state.todos.filter((todo) => todo.id !== todoId);
+
+  //guardamos el cambio en el localStorage
+  saveLocalStore();
 };
 
 /**
@@ -104,6 +134,9 @@ const deleteCompleted = () => {
   //actualizamos los todos, vamos a filtrar todos los todos
   //los todos cuyo done (completado) sea falso, se van a quedar
   state.todos = state.todos.filter((todo) => !todo.done);
+
+  //guardamos el cambio en el localStorage
+  saveLocalStore();
 };
 
 /**
@@ -114,6 +147,9 @@ const deleteCompleted = () => {
 const setFilter = (newFilter = Filters.All) => {
   //le establecemos un filtro nuevo al filtro
   state.filter = newFilter;
+
+  //guardamos el cambio en el localStorage
+  saveLocalStore();
 };
 
 /**
