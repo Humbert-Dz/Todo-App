@@ -158,6 +158,12 @@ const setFilter = (newFilter = Filters.All) => {
  */
 const getCurrentFilter = () => state.filter;
 
+/**
+ * Función para obtener la cantidad de todos pendientes
+ * @returns cantidad de todos pendientes
+ */
+const getCurrentTodoPending = () => getTodos(Filters.Pending).length;
+
 //si no exportamos lo que tengamos aquí, como esto es un módulo, todo está encapsulado aquí mismo
 export default {
   addTodo,
@@ -169,4 +175,5 @@ export default {
   loadStore,
   setFilter,
   toggleTodo,
+  getCurrentTodoPending,
 };

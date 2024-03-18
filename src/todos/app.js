@@ -12,6 +12,21 @@ const elementsIDs = {
   btnEliminarTodos: "#clear-completed",
   //anclas de filtro <a>
   anclasFiltro: ".filtro",
+  //etiqueta de todos pendientes
+  LabelPendientes: "#pending-count",
+};
+
+/**
+ * funcion que actualiza el numero de todos pendientes en la etiqueta correspondiente
+ */
+const actualizarTodosPendientes = () => {
+  //se llama aqui y no afuera por que si lo hacemos arriba, en ese momento aun no existe
+  //ya que carga el javascript y todo lo que tiene que ver con los todos
+  // y termina con el footer del contenedor, y esta etiqueta se encuentra al final
+  const pendientesLabel = document.querySelector(elementsIDs.LabelPendientes);
+
+  // actualizamos el numero de pendientes en la etiqueta
+  pendientesLabel.innerText = todoStore.getCurrentTodoPending();
 };
 
 /**
@@ -40,6 +55,9 @@ const App = (elementId) => {
 
     //llamamos a la funcion que renderiza los todos
     renderizarTodos();
+
+    //actualiza el numero de todos pendientes en la etiqueta
+    actualizarTodosPendientes();
   })();
 
   // * referencias HTML
@@ -66,8 +84,11 @@ const App = (elementId) => {
     //limpiamos el input para agregar un nuevo todo
     newDescriptionInput.value = "";
 
-    //renderiza los todos
+    //llamamos a la funcion que renderiza los todos
     renderizarTodos();
+
+    //actualizamos el numero de todos pendientes
+    actualizarTodosPendientes();
   });
 
   //*al contenedor de todos, agregamos un evento click
@@ -86,7 +107,11 @@ const App = (elementId) => {
       todoStore.toggleTodo(element.getAttribute("data-id"));
     }
 
+    //llamamos a la funcion que renderiza los todos
     renderizarTodos();
+
+    //actualizamos el numero de todos pendientes
+    actualizarTodosPendientes();
   });
 
   //* eliminar todos completados
@@ -95,19 +120,30 @@ const App = (elementId) => {
   btnEliminarTodos.addEventListener("click", () => {
     todoStore.deleteCompleted();
 
+    //llamamos a la funcion que renderiza los todos
     renderizarTodos();
+
+    //actualizamos el numero de todos pendientes
+    actualizarTodosPendientes();
   });
 
   //*aplicar filtros
   const anclasFiltro = document.querySelectorAll(elementsIDs.anclasFiltro);
 
+  // a cada ancla
   anclasFiltro.forEach((ancla) => {
+    // aplicamos un evento de escucha
     ancla.addEventListener("click", (event) => {
+      //eliminamos la clase selected a todas las anclas
       anclasFiltro.forEach((ancla) => ancla.classList.remove("selected"));
 
+      //cuando hacemos click en una ancla agregamos la clase selected
       ancla.classList.add("selected");
+      //como filtro tomamos el id del elemento sobre el que se hizo clic
       const filtro = event.target.id;
+      //aplicamos un filtro
       todoStore.setFilter(filtro);
+      //llamamos a la funcion que renderiza los todos
       renderizarTodos();
     });
   });
