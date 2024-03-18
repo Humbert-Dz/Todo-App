@@ -329,3 +329,9 @@ button:active {
 .selected {
   background-color: #488dca69;
 }
+
+@media (max-width: 900px) {
+  .container {
+    width: 90%;
+  }
+}
