@@ -32,7 +32,7 @@ const initStore = () => {
 
 /**
  * !Funcion que carga el local storage en caso de existir
- * @returns 
+ * @returns
  */
 const loadStore = () => {
   //validamos que si no existe el item local storage simplemente retornamos

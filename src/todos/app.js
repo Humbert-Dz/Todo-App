@@ -10,6 +10,8 @@ const elementsIDs = {
   NewTodoInput: "#new-todo-input",
   //boton eliminar todosCompletados
   btnEliminarTodos: "#clear-completed",
+  //anclas de filtro <a>
+  anclasFiltro: ".filtro",
 };
 
 /**
@@ -94,6 +96,20 @@ const App = (elementId) => {
     todoStore.deleteCompleted();
 
     renderizarTodos();
+  });
+
+  //*aplicar filtros
+  const anclasFiltro = document.querySelectorAll(elementsIDs.anclasFiltro);
+
+  anclasFiltro.forEach((ancla) => {
+    ancla.addEventListener("click", (event) => {
+      anclasFiltro.forEach((ancla) => ancla.classList.remove("selected"));
+
+      ancla.classList.add("selected");
+      const filtro = event.target.id;
+      todoStore.setFilter(filtro);
+      renderizarTodos();
+    });
   });
 };
 
